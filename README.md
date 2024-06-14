@@ -1,4 +1,4 @@
-# eye-care
+# eye-care（仮称）
 近視抑制アプリケーション(Android対応)
 
 マイルストーン
