@@ -11,12 +11,12 @@
 3. スマホ首等になりやすい姿勢の推定や、周りの照度等のデータも取り扱えるようにする。
 
 動作環境
- - 初期対応OS: Android（将来的にはiOS対応もしてみたい。が開発者に実行環境がない）
+ - 初期対応OS: Android10以降（将来的にはiOS対応もしてみたい。が開発者に実行環境がない）
  - その他環境: インカメラ付き（スマートフォン、タブレット）、MediaPypeIrysがまともに動くスペック
 
 開発リソース: 
  - MediaPipeIrys[1]　・・・　カメラの画像から、カメラと人の眼球との距離を推定できるAI。後継のAIモデルは顔全体の3次元データが取得できるが、今のところ必要ないので利用するかどうかは不明。※後継AI(https://ai.google.dev/edge/mediapipe/solutions/vision/face_landmarker?hl=ja)
- - Kotlin or Flutter　・・・　Flutterアプリがバックグラウンドでカメラ起動ができるか否かで決定
+ - Dart/Flutter　・・・　Flutterアプリがバックグラウンドでカメラ起動ができるか否かで決定->適切な条件下で可能
 
 [1]: https://github.com/google-ai-edge/mediapipe/blob/master/docs/solutions/iris.md
 
