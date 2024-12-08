@@ -1,11 +1,20 @@
-import 'package:flutter/material.dart';
+import 'dart:io';
 
-void main() {
-  runApp(const MyApp());
+import 'package:flutter/material.dart';
+import 'package:camera/camera.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final cameras = await availableCameras();
+  final firstCamera = cameras.first;
+
+  runApp(MyApp(camera: firstCamera));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final CameraDescription camera;
+
+  const MyApp({super.key, required this.camera});
 
   // This widget is the root of your application.
   @override
@@ -31,7 +40,114 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      // home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: CameraScreen(camera: camera),
+    );
+  }
+}
+
+class CameraScreen extends StatefulWidget {
+  final CameraDescription camera;
+
+  const CameraScreen({super.key, required this.camera});
+
+  @override
+  State<CameraScreen> createState() => _CameraScreenState();
+}
+
+class _CameraScreenState extends State<CameraScreen> {
+  late CameraController _controller;
+  late Future<void> _initializeControllerFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = CameraController(
+      // Get a specific camera from the list of available cameras.
+      widget.camera,
+      // Define the resolution to use.
+      ResolutionPreset.medium,
+    );
+
+    // Next, initialize the controller. This returns a Future.
+    _initializeControllerFuture = _controller.initialize();
+  }
+
+  @override
+  void dispose() {
+    // Dispose of the controller when the widget is disposed.
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Take a picture')),
+      // You must wait until the controller is initialized before displaying the
+      // camera preview. Use a FutureBuilder to display a loading spinner until
+      // the controller has finished initializing.
+      body: FutureBuilder<void>(
+        future: _initializeControllerFuture,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            // If the Future is complete, display the preview.
+            return CameraPreview(_controller);
+          } else {
+            // Otherwise, display a loading spinner.
+            return const Center(child: CircularProgressIndicator());
+          }
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.camera_alt),
+        // Provide an onPressed callback.
+        onPressed: () async {
+          // Take the Picture in a try / catch block. If anything goes wrong,
+          // catch the error.
+          try {
+            // Ensure the camera is initialized.
+            await _initializeControllerFuture;
+
+            // Attempt to take a picture and get the file `image`
+            // where it was saved.
+            final image = await _controller.takePicture();
+
+            // If the picture was taken, display it on a new screen.
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => DisplayPictureScreen(imagePath: image.path),
+              ),
+            );
+          } catch (e) {
+            // If an error occurs, log the error to the console.
+            print(e);
+          }
+        },
+      ),
+    );
+  }
+}
+
+class DisplayPictureScreen extends StatelessWidget {
+  final String imagePath;
+
+  const DisplayPictureScreen({super.key, required this.imagePath});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Display the Picture')),
+      // The image is stored as a file on the device. Use the `Image.file`
+      // constructor with the given path to display the image.
+      body: Column(
+        children: [
+          Image.file(File(imagePath)),
+          Text(imagePath),
+        ],
+      )
+      
     );
   }
 }
@@ -105,21 +221,10 @@ class _MyHomePageState extends State<MyHomePage> {
           // wireframe for each widget.
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
+                Text("Home  Page"),
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      ),// This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
