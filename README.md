@@ -20,5 +20,29 @@
 
 [1]: https://github.com/google-ai-edge/mediapipe/blob/master/docs/solutions/iris.md
 
+開発環境: 
+- Zorin OS 17.2 Core 64bit
+- Android Studio( Koala Feature Drop | 2024.1.2 )
+- Flutter SDK ( Stable channel, 3.24.3 , ref: dec2ee5)
+
+2024.12.8時点
+```
+$ flutter doctor
+  Doctor summary (to see all details, run flutter doctor -v):
+[✓] Flutter (Channel stable, 3.24.3, on Zorin OS 17.2 6.8.0-48-generic, locale ja_JP.UTF-8)
+[!] Android toolchain - develop for Android devices (Android SDK version 35.0.0)
+    ✗ cmdline-tools component is missing
+      Run `path/to/sdkmanager --install "cmdline-tools;latest"`
+      See https://developer.android.com/studio/command-line for more details.
+    ✗ Android license status unknown.
+      Run `flutter doctor --android-licenses` to accept the SDK licenses.
+      See https://flutter.dev/to/linux-android-setup for more details.
+[✓] Chrome - develop for the web
+[✓] Linux toolchain - develop for Linux desktop
+[✓] Android Studio (version 2024.1)
+[✓] VS Code (version 1.93.1)
+[✓] Connected device (2 available)
+[✓] Network resources
+```
 
 このプロジェクトは、GitHub CopilotでAI共同開発する練習を兼ねるものとする。
