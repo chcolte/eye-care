@@ -15,8 +15,8 @@
  - その他環境: インカメラ付き（スマートフォン、タブレット）、MediaPypeIrysがまともに動くスペック
 
 開発リソース: 
- - MediaPipeIrys[1]　・・・　カメラの画像から、カメラと人の眼球との距離を推定できるAI。後継のAIモデルは顔全体の3次元データが取得できるが、今のところ必要ないので利用するかどうかは不明。※後継AI(https://ai.google.dev/edge/mediapipe/solutions/vision/face_landmarker?hl=ja)
- - Dart/Flutter　・・・　Flutterアプリがバックグラウンドでカメラ起動ができるか否かで決定->適切な条件下で可能
+ - MediaPipeIrys[1]　・・・　カメラの画像から、カメラと人の眼球との距離を推定できるAI。後継のAIモデルは顔全体の3次元データが取得できるが、今のところ必要ないので利用するかどうかは不明。※[後継AI](https://ai.google.dev/edge/mediapipe/solutions/vision/face_landmarker?hl=ja)
+ - Dart/Flutter　・・・　Flutterアプリがバックグラウンドでカメラ起動ができるか否かで決定->適切な条件下で可能(https://github.com/chcolte/eye-care/issues/2#issue-2724562553)
 
 [1]: https://github.com/google-ai-edge/mediapipe/blob/master/docs/solutions/iris.md
 
