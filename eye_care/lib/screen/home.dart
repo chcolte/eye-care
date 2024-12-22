@@ -20,19 +20,51 @@ class _HomePageState extends State<HomePage> {
     double _height = MediaQuery.of(context).size.height;
     double _width = MediaQuery.of(context).size.width;
 
-    return Scaffold(
-        appBar: AppBar(
-          title: const Text('Home'),
-        ),
-        body:
-        Padding(
-          padding: const EdgeInsets.all(10),
-          child: Column(
+    return DefaultTabController(
+        initialIndex: 1,
+        length: 3,
+        child: Scaffold(
+          appBar: AppBar(
+            leading: IconButton(
+              icon: Icon(Icons.menu),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => HomePage()),//ここの遷移先を設定画面ができ次第変更
+                );
+              },
+            ),
+            centerTitle: true,
+            title: Text('Eye Care'),
+
+            actions: [// 使い先未定
+              IconButton(
+                icon: Icon(Icons.dark_mode),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => HomePage()),
+                  );
+                },
+              ),
+            ],
+
+            bottom: const TabBar(
+              tabs: [
+                Tab(text: '設定'),
+                Tab(text: 'ホーム'),
+                Tab(text: '詳細記録'),
+              ],
+            ),
+          ),
+          body: TabBarView(
             children: [
-              scoreWidget(80, 10),
+              Center(child: Text('車のコンテンツ')),
+              Center(child: scoreWidget(60, 24)),// とりあえずおいておく
+              Center(child: Text('自転車のコンテンツ')),
             ],
           ),
-        )
+        ),
     );
   }
 
